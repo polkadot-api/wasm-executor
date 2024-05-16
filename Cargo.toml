@@ -1,0 +1,19 @@
+[package]
+name = "wasm-executor"
+version = "0.0.0"
+edition = "2021"
+license = "MIT"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+wasm-bindgen = "0.2.87"
+serde = { version = "1.0", features = ["derive"] }
+serde-wasm-bindgen = "0.6.3"
+smoldot = { version = "0.17.0", default-features = false, git = "https://github.com/smol-dot/smoldot", rev = "6d9fce6902ce2cdc92b9876fea3be6dcea6c73d5" }
+parity-scale-codec = { version = "3.6.12", default-features = false }
+
+[profile.release]
+codegen-units = 1
+lto = true

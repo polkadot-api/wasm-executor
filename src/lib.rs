@@ -1,9 +1,11 @@
+use std::array::IntoIter;
+
 use wasm_bindgen::prelude::*;
 
 use parity_scale_codec::{Decode, Encode};
 use smoldot::{
     executor::{
-        host::{Config, HeapPages, HostVmPrototype},
+        host::{Config, HeapPages, HostVmPrototype, StorageProofSizeBehavior},
         runtime_call::{self, RuntimeCall},
         storage_diff::TrieDiff,
     },
@@ -62,6 +64,20 @@ pub fn get_metadata(buf: JsValue) -> Result<JsValue, JsValue> {
     ))?)
 }
 
+fn get_result(vm: RuntimeCall) -> Result<HexString, JsValue> {
+    match vm {
+        RuntimeCall::Finished(res) => match res {
+            Ok(res) => Ok(HexString(res.virtual_machine.value().as_ref().to_vec())),
+            _ => Err(serde_wasm_bindgen::to_value("Error retrieving data")?),
+        },
+
+        RuntimeCall::StorageGet(req) => {
+            get_result(req.inject_value(Option::<(IntoIter<Vec<u8>, 0>, _)>::None))
+        }
+        _ => Err(serde_wasm_bindgen::to_value("VM execution not expected")?),
+    }
+}
+
 fn run_call(
     vm_proto: HostVmPrototype,
     func: &str,
@@ -74,16 +90,11 @@ fn run_call(
         storage_main_trie_changes: TrieDiff::default(),
         max_log_level: 0,
         calculate_trie_changes: false,
+        storage_proof_size_behavior: StorageProofSizeBehavior::ConstantReturnValue(0),
     });
 
     match vm {
-        Ok(vm) => match vm {
-            RuntimeCall::Finished(res) => match res {
-                Ok(res) => Ok(HexString(res.virtual_machine.value().as_ref().to_vec())),
-                _ => Err(serde_wasm_bindgen::to_value("Error retrieving data")?),
-            },
-            _ => Err(serde_wasm_bindgen::to_value("VM execution not expected")?),
-        },
+        Ok(vm) => get_result(vm),
         Err((_start_err, _host_vm_proto)) => Err(serde_wasm_bindgen::to_value(
             &format!("Method {func} err").as_str(),
         )?),

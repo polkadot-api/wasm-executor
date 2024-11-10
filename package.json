@@ -28,5 +28,5 @@
     "wasm": "pnpm run clean && wasm-pack build --target nodejs --out-dir pkg",
     "build": "pnpm run wasm && bash scripts/build.sh"
   },
-  "packageManager": "pnpm@9.1.1+sha512.14e915759c11f77eac07faba4d019c193ec8637229e62ec99eefb7cf3c3b75c64447882b7c485142451ee3a6b408059cdfb7b7fa0341b975f12d0f7629c71195"
+  "packageManager": "pnpm@9.12.3+sha512.cce0f9de9c5a7c95bef944169cc5dfe8741abfb145078c0d508b868056848a87c81e626246cb60967cbd7fd29a6c062ef73ff840d96b3c86c40ac92cf4a813ee"
 }

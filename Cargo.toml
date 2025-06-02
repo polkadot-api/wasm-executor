@@ -11,8 +11,8 @@ crate-type = ["cdylib"]
 wasm-bindgen = "0.2"
 serde = { version = "1.0", features = ["derive"] }
 serde-wasm-bindgen = "0.6"
-smoldot = { version = "0.19.0", default-features = false, git = "https://github.com/smol-dot/smoldot", rev = "423c8bbb19fa383c3ed357cd20578ba2ebf2d0df" }
-parity-scale-codec = { version = "3.6", default-features = false }
+smoldot = { version = "0.19.4", default-features = false }
+parity-scale-codec = { version = "3.7", default-features = false }
 
 [profile.release]
 codegen-units = 1

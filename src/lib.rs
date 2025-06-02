@@ -41,7 +41,9 @@ pub fn get_metadata(buf: JsValue) -> Result<JsValue, JsValue> {
     let params = match run_call(vm_proto.clone(), "Metadata_metadata_versions", Vec::new()) {
         Ok(res) => {
             let avail_versions = Vec::<u32>::decode(&mut &res.0[..]).unwrap();
-            if avail_versions.contains(&15) {
+            if avail_versions.contains(&16) {
+                vec![HexString(<u32>::encode(&16))]
+            } else if avail_versions.contains(&15) {
                 vec![HexString(<u32>::encode(&15))]
             } else {
                 vec![HexString(<u32>::encode(&14))]

@@ -11,22 +11,27 @@
   "files": [
     "dist"
   ],
-  "main": "index.js",
-  "types": "./dist/index.d.ts",
   "exports": {
-    ".": {
-      "module": "./dist/index.js",
-      "import": "./dist/index.js",
-      "require": "./dist/index.js",
-      "default": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+    "./web": {
+      "module": "./dist/web.js",
+      "import": "./dist/web.js",
+      "require": "./dist/web.js",
+      "default": "./dist/web.js",
+      "types": "./dist/web.d.ts"
+    },
+    "./node": {
+      "module": "./dist/node.js",
+      "import": "./dist/node.js",
+      "require": "./dist/node.js",
+      "default": "./dist/node.js",
+      "types": "./dist/node.d.ts"
     },
     "./package.json": "./package.json"
   },
   "scripts": {
     "clean": "rm -rf pkg dist",
-    "wasm": "pnpm run clean && wasm-pack build --target nodejs --out-dir pkg",
-    "build": "pnpm run wasm && bash scripts/build.sh"
+    "wasm": "pnpm run clean && wasm-pack build --target nodejs --out-dir dist --out-name node --no-pack && wasm-pack build --target web --out-dir dist --out-name web --no-pack",
+    "build": "pnpm run wasm"
   },
-  "packageManager": "pnpm@9.12.3+sha512.cce0f9de9c5a7c95bef944169cc5dfe8741abfb145078c0d508b868056848a87c81e626246cb60967cbd7fd29a6c062ef73ff840d96b3c86c40ac92cf4a813ee"
+  "packageManager": "pnpm@10.11.0+sha512.6540583f41cc5f628eb3d9773ecee802f4f9ef9923cc45b69890fb47991d4b092964694ec3a4f738a420c918a333062c8b925d312f42e4f0c263eb603551f977"
 }

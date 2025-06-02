@@ -25,7 +25,7 @@ const metadata = await import("@polkadot-api/wasm-executor/web").then(
 ### Node
 
 ```ts
-import { getMetadataFromRuntime } from "@polkadot-api/wasm-executor";
+import { getMetadataFromRuntime } from "@polkadot-api/wasm-executor/node";
 
 // IMPORTANT to prefix it with `0x`!
 const runtime = "0x" + fs.readFileSync("runtime.wasm").toString("hex");

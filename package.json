@@ -1,6 +1,6 @@
 {
   "name": "@polkadot-api/wasm-executor",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "author": "Carlo Sala (https://github.com/carlosala)",
   "repository": {
     "type": "git",
@@ -31,7 +31,7 @@
   "scripts": {
     "clean": "rm -rf pkg dist",
     "wasm": "pnpm run clean && wasm-pack build --target nodejs --out-dir dist --out-name node --no-pack && wasm-pack build --target web --out-dir dist --out-name web --no-pack",
-    "build": "pnpm run wasm"
+    "build": "pnpm run wasm && rm dist/.gitignore"
   },
   "packageManager": "pnpm@10.11.0+sha512.6540583f41cc5f628eb3d9773ecee802f4f9ef9923cc45b69890fb47991d4b092964694ec3a4f738a420c918a333062c8b925d312f42e4f0c263eb603551f977"
 }
